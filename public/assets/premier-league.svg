@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" fill="none">
+    <rect width="400" height="240" rx="20" fill="#38003C"/>
+    <circle cx="200" cy="120" r="60" fill="#00FF87" fill-opacity="0.1" stroke="#00FF87" stroke-width="2"/>
+    <path d="M180 100L220 120L180 140V100Z" fill="#00FF87"/>
+    <text x="200" y="190" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-weight="bold" font-size="16">PREMIER LEAGUE ON TV360</text>
+  </svg>

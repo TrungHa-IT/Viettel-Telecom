@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" rx="24" fill="#F8FAFC"/>
+  <!-- Base router body -->
+  <rect x="110" y="170" width="180" height="48" rx="10" fill="#1E293B"/>
+  <rect x="120" y="218" width="20" height="6" rx="2" fill="#0F172A"/>
+  <rect x="260" y="218" width="20" height="6" rx="2" fill="#0F172A"/>
+  <!-- Status LEDs -->
+  <circle cx="140" cy="194" r="3.5" fill="#10B981"/>
+  <circle cx="160" cy="194" r="3.5" fill="#10B981"/>
+  <circle cx="180" cy="194" r="3.5" fill="#3B82F6"/>
+  <circle cx="200" cy="194" r="3.5" fill="#EE0033"/>
+  <circle cx="220" cy="194" r="3.5" fill="#10B981"/>
+  <!-- Viettel Logo symbol on router -->
+  <rect x="250" y="188" width="22" height="12" rx="3" fill="#EE0033"/>
+  <text x="253" y="197" fill="white" font-size="7" font-weight="900" font-family="sans-serif">VT</text>
+  <!-- 4 Dual Antennas -->
+  <rect x="125" y="90" width="6" height="80" rx="3" fill="#334155" transform="rotate(-12 128 170)"/>
+  <rect x="160" y="80" width="6" height="90" rx="3" fill="#334155" transform="rotate(-4 163 170)"/>
+  <rect x="234" y="80" width="6" height="90" rx="3" fill="#334155" transform="rotate(4 237 170)"/>
+  <rect x="269" y="90" width="6" height="80" rx="3" fill="#334155" transform="rotate(12 272 170)"/>
+  <!-- Signal waves -->
+  <path d="M165 70C185 55 215 55 235 70" stroke="#EE0033" stroke-width="4" stroke-linecap="round"/>
+  <path d="M145 50C180 25 220 25 255 50" stroke="#EE0033" stroke-width="4" stroke-linecap="round" stroke-opacity="0.6"/>
+  <path d="M125 30C170 -5 230 -5 275 30" stroke="#EE0033" stroke-width="4" stroke-linecap="round" stroke-opacity="0.3"/>
+  <!-- Wi-Fi 6 Badge -->
+  <rect x="160" y="240" width="80" height="24" rx="12" fill="#EE0033"/>
+  <text x="200" y="256" fill="white" font-size="11" font-weight="900" font-family="sans-serif" text-anchor="middle">WI-FI 6 AX</text>
+</svg>

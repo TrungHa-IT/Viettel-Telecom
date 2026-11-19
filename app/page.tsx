@@ -6,11 +6,6 @@ export const metadata = {
   description: "Trang tư vấn và đăng ký lắp mạng cáp quang Viettel, Wi-Fi 6, Wi-Fi 7, truyền hình TV360, camera an ninh.",
 };
 
-interface PageRow {
-  slug: string;
-  title: string;
-}
-
 interface RawDbPackage {
   id: number;
   name: string;
@@ -19,6 +14,11 @@ interface RawDbPackage {
   category: string;
   features: string;
   badge: string;
+}
+
+interface PageRow {
+  slug: string;
+  title: string;
 }
 
 export default function Home() {

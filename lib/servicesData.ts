@@ -5,6 +5,7 @@ export interface DetailedService {
   tagline: string;
   badge: string;
   heroBgGradient: string;
+  heroBackgroundImage?: string;
   assetImage: string;
   assetAlt: string;
   introText: string;
@@ -17,6 +18,12 @@ export interface DetailedService {
     isHot?: boolean;
     features: string[];
   }[];
+  priceTable?: {
+    title: string;
+    columns: string[];
+    rows: { name: string; values: string[]; featured?: boolean }[];
+    note: string;
+  };
   specifications?: {
     label: string;
     value: string;
@@ -35,6 +42,7 @@ const baseServices: Record<string, DetailedService> = {
     tagline: "Băng thông siêu khủng tới 10 Gbps, độ trễ tiệm cận 0ms, công nghệ MLO đa băng tần đồng thời.",
     badge: "TIÊN PHONG CÔNG NGHỆ 2026",
     heroBgGradient: "from-[#8B0000] via-[#EE0033] to-[#B30024]",
+    heroBackgroundImage: "/assets/hero-internet-hcm.png",
     assetImage: "/assets/wifi7-modem.svg",
     assetAlt: "Modem Viettel Wi-Fi 7 BE3600",
     introText:
@@ -110,6 +118,7 @@ const baseServices: Record<string, DetailedService> = {
     tagline: "Bản quyền phát sóng trọn vẹn 380 trận đấu mỗi mùa, chất lượng 4K siêu sắc nét, âm thanh Dolby Audio.",
     badge: "ĐỘC QUYỀN NGOẠI HẠNG ANH",
     heroBgGradient: "from-[#38003c] via-[#5b0060] to-[#EE0033]",
+    heroBackgroundImage: "/assets/hero-tv360-hcm.jpg",
     assetImage: "/assets/premier-league.svg",
     assetAlt: "Ngoại Hạng Anh Bản Quyền TV360 Viettel",
     introText:
@@ -171,57 +180,69 @@ const baseServices: Record<string, DetailedService> = {
     slug: "combo-internet-truyen-hinh-viettel",
     title: "Combo Internet Cáp Quang & Truyền Hình TV360 Viettel",
     headline: "COMBO INTERNET & TRUYỀN HÌNH TV360",
-    tagline: "Tiết kiệm tới 35% chi phí so với đăng ký riêng lẻ. Trọn gói giải trí đỉnh cao cho cả gia đình.",
-    badge: "TIẾT KIỆM 35% CƯỚC",
+    tagline: "Chọn gói Internet, truyền hình TV360, combo hoặc combo Cloud theo nhu cầu của gia đình.",
+    badge: "BẢNG GIÁ THAM KHẢO THÁNG 11/2026",
     heroBgGradient: "from-[#8B0000] via-[#CC002B] to-[#1E293B]",
+    heroBackgroundImage: "/assets/hero-tv360-hcm.jpg",
     assetImage: "/assets/tv360-box.svg",
     assetAlt: "Combo Internet và TV360 Box Viettel",
     introText:
-      "Gói cước tích hợp 2 trong 1 hoàn hảo của Viettel Telecom: vừa sở hữu đường truyền cáp quang Wi-Fi 6 tốc độ cao không giới hạn, vừa tận hưởng hơn 160 kênh truyền hình bản quyền TV360 đặc sắc cùng kho phim HD bom tấn cập nhật liên tục.",
+      "Bảng giá tham khảo Viettel TP.HCM tháng 11/2026. Mức cước thay đổi theo khu vực nội thành/ngoại thành, gói TV360 App hoặc TV Box và điều kiện hạ tầng tại địa chỉ lắp đặt.",
     highlights: [
-      "1 đường truyền 2 dịch vụ: Tiết kiệm tối đa chi phí hàng tháng",
-      "Trang bị miễn phí Modem Wi-Fi 6 thế hệ mới & Box TV360 4K",
-      "Điều khiển giọng nói thông minh bằng tiếng Việt mọi vùng miền",
-      "Kho phim, ca nhạc, thiếu nhi và thể thao độc quyền phong phú",
+      "NETVT1: 300 Mbps; NETVT2: từ 500 Mbps đến 1 Gbps",
+      "Lựa chọn gói Internet, TV360, combo hoặc combo Cloud",
+      "Có các gói Mesh Wi-Fi phục vụ nhà nhiều tầng và diện tích lớn",
+      "Giá tham khảo theo bảng cước; xác nhận ưu đãi theo địa chỉ lắp đặt",
     ],
+    priceTable: {
+      title: "Bảng giá Internet và các gói Combo TV360 Viettel TP.HCM",
+      columns: ["Gói cước", "Tốc độ / thiết bị", "Internet ngoại thành / nội thành", "App Basic", "App VIP", "Box Basic", "Box VIP"],
+      rows: [
+        { name: "NETVT1", values: ["300 Mbps", "195.000đ / 235.000đ", "220.000đ / 260.000đ", "245.000đ / 285.000đ", "245.000đ / 285.000đ", "275.000đ / 315.000đ"] },
+        { name: "NETVT2", values: ["500 Mbps – 1 Gbps", "240.000đ / 265.000đ", "266.000đ / 290.000đ", "290.000đ / 315.000đ", "290.000đ / 315.000đ", "320.000đ / 345.000đ"] },
+        { name: "MESHVT1", values: ["300 Mbps · 1 Mesh", "210.000đ / 255.000đ", "235.000đ / 280.000đ", "260.000đ / 305.000đ", "260.000đ / 305.000đ", "290.000đ / 335.000đ"] },
+        { name: "MESHVT2", values: ["500 Mbps – 1 Gbps · 2 Mesh", "245.000đ / 289.000đ", "270.000đ / 324.000đ", "295.000đ / 339.000đ", "295.000đ / 329.000đ", "325.000đ / 369.000đ"], featured: true },
+        { name: "MESHVT3", values: ["500 Mbps – 1 Gbps · 3 Mesh", "299.000đ / 359.000đ", "324.000đ / 384.000đ", "349.000đ / 409.000đ", "349.000đ / 409.000đ", "379.000đ / 439.000đ"] },
+      ],
+      note: "Giá tính theo đồng/tháng; mỗi ô ghi ngoại thành / nội thành TP.HCM. Giá đã gồm VAT. MESHVT1/2/3 lần lượt kèm 1/2/3 thiết bị Home WiFi. Khuyến mại trả trước và phí hòa mạng cần xác nhận theo địa chỉ, thời điểm đăng ký và điều kiện triển khai.",
+    },
     packages: [
       {
-        name: "COMBO SUN1 TV360",
-        speed: "150 Mbps + 160 Kênh TV",
-        price: 210000,
-        description: "Gói cước gia đình phổ biến nhất, đáp ứng hoàn hảo nhu cầu xem TV và lướt web.",
+        name: "NETVT1 + TV360 App Basic",
+        speed: "300 Mbps + TV360 App Basic",
+        price: 220000,
+        description: "Giá App Basic tham khảo tháng 11/2026; nội thành 260.000đ/tháng.",
+        features: ["Ngoại thành TP.HCM: 220.000đ/tháng", "Nội thành TP.HCM: 260.000đ/tháng", "Giá đã gồm VAT; thiết bị và ưu đãi xác nhận theo địa chỉ"]
+      },
+      {
+        name: "NETVT2 + TV360 App Basic",
+        speed: "500 Mbps–1 Gbps + TV360 App Basic",
+        price: 266000,
+        description: "Giá App Basic tham khảo tháng 11/2026; nội thành 290.000đ/tháng.",
+        features: ["Ngoại thành TP.HCM: 266.000đ/tháng", "Nội thành TP.HCM: 290.000đ/tháng", "Giá đã gồm VAT; thiết bị và ưu đãi xác nhận theo địa chỉ"]
+      },
+      {
+        name: "MESHVT1 + TV360 App Basic",
+        speed: "300 Mbps + 1 Mesh + TV360 App Basic",
+        price: 235000,
+        description: "Giá App Basic tham khảo tháng 11/2026; nội thành 280.000đ/tháng.",
         isHot: true,
-        features: [
-          "Internet cáp quang 150 Mbps ổn định",
-          "Cài đặt ứng dụng TV360 trên SmartTV hoặc cấp Box 4K",
-          "160+ kênh truyền hình trong nước và quốc tế",
-          "Miễn phí lắp đặt khi thanh toán trước",
-        ],
+        features: ["01 modem + 01 Mesh", "Ngoại thành TP.HCM: 235.000đ/tháng", "Nội thành TP.HCM: 280.000đ/tháng", "Giá đã gồm VAT; thiết bị và ưu đãi xác nhận theo địa chỉ"]
       },
       {
-        name: "COMBO SUN2 TV360",
-        speed: "250 Mbps + 160 Kênh TV",
-        price: 259000,
-        description: "Băng thông rộng hơn cho gia đình đông người, nhiều thiết bị kết nối cùng lúc.",
-        features: [
-          "Tốc độ mạng 250 Mbps cực nhanh",
-          "Xem phim 4K, video streaming không độ trễ",
-          "Đầu thu TV360 4K điều khiển giọng nói",
-          "Tặng 1 tháng cước khi đóng trước 6 tháng",
-        ],
+        name: "MESHVT2 + TV360 App Basic",
+        speed: "500 Mbps–1 Gbps + 2 Mesh + TV360 App Basic",
+        price: 270000,
+        description: "Giá App Basic tham khảo tháng 11/2026; nội thành 324.000đ/tháng.",
+        features: ["01 modem + 02 Mesh", "Ngoại thành TP.HCM: 270.000đ/tháng", "Nội thành TP.HCM: 324.000đ/tháng", "Giá đã gồm VAT; thiết bị và ưu đãi xác nhận theo địa chỉ"]
       },
       {
-        name: "COMBO STAR1 MESH + TV360",
-        speed: "150 Mbps Mesh + TV",
-        price: 240000,
-        description: "Tích hợp sẵn công nghệ Mesh phủ sóng xuyên tường cho nhà nhiều tầng.",
-        features: [
-          "1 Modem Wi-Fi chính + 1 Home Wifi Mesh",
-          "Phủ sóng rộng khắp nhà không góc chết",
-          "Trọn gói truyền hình TV360 chất lượng cao",
-          "Hỗ trợ kỹ thuật định kỳ tận nhà 24/7",
-        ],
-      },
+        name: "MESHVT3 + TV360 App Basic",
+        speed: "500 Mbps–1 Gbps + 3 Mesh + TV360 App Basic",
+        price: 324000,
+        description: "Giá App Basic tham khảo tháng 11/2026; nội thành 384.000đ/tháng.",
+        features: ["01 modem + 03 Mesh", "Ngoại thành TP.HCM: 324.000đ/tháng", "Nội thành TP.HCM: 384.000đ/tháng", "Giá đã gồm VAT; thiết bị và ưu đãi xác nhận theo địa chỉ"]
+      }
     ],
     faq: [
       {
@@ -238,6 +259,7 @@ const baseServices: Record<string, DetailedService> = {
     tagline: "Hình ảnh Full HD 2K sắc nét, đàm thoại 2 chiều, trí tuệ nhân tạo AI nhận diện người, lưu trữ Cloud an toàn tuyệt đối.",
     badge: "BẢO MẬT VIETTEL CLOUD",
     heroBgGradient: "from-[#0F172A] via-[#1E293B] to-[#EE0033]",
+    heroBackgroundImage: "/assets/hero-camera-hcm.png",
     assetImage: "/assets/camera-indoor.svg",
     assetAlt: "Camera Viettel AI Cloud 360°",
     introText:
@@ -285,64 +307,100 @@ const baseServices: Record<string, DetailedService> = {
 
   "viettel-internet-doanh-nghiep": {
     slug: "viettel-internet-doanh-nghiep",
-    title: "Cáp Quang Doanh Nghiệp Viettel – Băng Thông Quốc Tế Lớn",
-    headline: "INTERNET CÁP QUANG DOANH NGHIỆP TỐC ĐỘ CAO",
-    tagline: "Cam kết băng thông quốc tế lớn, miễn phí địa chỉ IP tĩnh, thiết bị chịu tải hàng trăm kết nối đồng thời.",
-    badge: "CHUYÊN NGHIỆP - ỔN ĐỊNH",
+    title: "Bảng giá Internet Viettel dành cho Doanh nghiệp TP.HCM 2026",
+    headline: "INTERNET VIETTEL CHO DOANH NGHIỆP",
+    tagline: "Các gói PRO và MeshPRO với tốc độ đến 1 Gbps, băng thông quốc tế cam kết và lựa chọn mở rộng vùng phủ Wi-Fi.",
+    badge: "GIẢI PHÁP KẾT NỐI DOANH NGHIỆP",
     heroBgGradient: "from-[#0c1829] via-[#162a45] to-[#EE0033]",
+    heroBackgroundImage: "/assets/hero-business-hcm.png",
     assetImage: "/assets/enterprise-router.svg",
     assetAlt: "Thiết bị cân bằng tải Doanh nghiệp Viettel",
     introText:
-      "Dịch vụ Internet Leased Line và Cáp quang Doanh nghiệp của Viettel được thiết kế riêng cho công ty, ngân hàng, trường học và quán cafe. Đường truyền riêng biệt, ưu tiên luồng dữ liệu cao cấp, đảm bảo hoạt động kinh doanh luôn liên tục 24/7/365.",
+      "Bảng giá tham khảo dành cho doanh nghiệp tại TP.HCM theo công bố Viettel tháng 11/2026. Chọn gói theo tốc độ, nhu cầu băng thông quốc tế và vùng phủ Wi-Fi; hạ tầng và thiết bị được xác nhận theo địa chỉ lắp đặt.",
     highlights: [
-      "Cam kết băng thông quốc tế tối thiểu, SLA cam kết 99.9%",
-      "Tặng kèm 1 đến nhiều địa chỉ IP Tĩnh (Static IP)",
-      "Thiết bị Modem cân bằng tải chuyên dụng DrayTek / MikroTik",
-      "Đội ngũ phản ứng nhanh xử lý sự cố trong vòng 60 phút",
+      "Gói PRO và MeshPRO tốc độ đến 1 Gbps",
+      "Băng thông quốc tế cam kết đến 10 Mbps tùy gói",
+      "Có lựa chọn mở rộng Wi-Fi Mesh cho văn phòng",
+      "Giá đã gồm VAT; trả trước 12 tháng tặng 1 tháng theo chính sách công bố",
     ],
+    priceTable: {
+      title: "Bảng giá Internet doanh nghiệp Viettel TP.HCM",
+      columns: ["Gói cước", "Tốc độ trong nước", "Quốc tế cam kết", "Wi-Fi / Mesh", "Giá/tháng"],
+      rows: [
+        { name: "PRO1", values: ["400 Mbps – 1 Gbps", "2 Mbps", "Modem Wi-Fi", "350.000đ"] },
+        { name: "PRO2", values: ["500 Mbps – 1 Gbps", "5 Mbps", "Modem Wi-Fi", "500.000đ"] },
+        { name: "MESHPRO1", values: ["400 Mbps – 1 Gbps", "2 Mbps", "Modem + Mesh", "400.000đ"], featured: true },
+        { name: "MESHPRO2", values: ["500 Mbps – 1 Gbps", "5 Mbps", "Modem + Mesh", "600.000đ"] },
+        { name: "PRO600", values: ["600 Mbps", "2 Mbps", "Modem Wi-Fi", "500.000đ"] },
+        { name: "PRO1000", values: ["1 Gbps", "10 Mbps", "Modem Wi-Fi", "700.000đ"] },
+        { name: "MESHPRO600", values: ["600 Mbps", "2 Mbps", "Modem + Mesh", "650.000đ"] },
+        { name: "MESHPRO1000", values: ["1 Gbps", "10 Mbps", "Modem + Mesh", "880.000đ"] },
+      ],
+      note: "Giá tham khảo Viettel TP.HCM tháng 11/2026, đã gồm 10% VAT. Gói trả trước 12 tháng được tặng 1 tháng theo chính sách được công bố. Tốc độ và thiết bị có thể phụ thuộc hạ tầng; cần xác nhận điều kiện áp dụng tại địa chỉ doanh nghiệp.",
+    },
     packages: [
       {
-        name: "PRO300",
-        speed: "300 Mbps",
-        price: 550000,
-        description: "Phù hợp văn phòng nhỏ 15 - 25 nhân sự hoặc quán cafe vừa.",
-        features: [
-          "Băng thông trong nước: 300 Mbps",
-          "Băng thông quốc tế tối thiểu: 5.5 Mbps",
-          "Trang bị Modem chuẩn Gigabit chịu tải cao",
-          "Miễn phí lắp đặt khi đóng trước 6 tháng",
-        ],
+        name: "PRO1",
+        speed: "400 Mbps–1 Gbps · quốc tế 2 Mbps",
+        price: 350000,
+        description: "Gói doanh nghiệp. giá tham khảo 350.000đ/tháng đã gồm VAT.",
+        features: ["Băng thông quốc tế cam kết: 2 Mbps", "Modem Wi-Fi", "Trả trước 12 tháng tặng 1 tháng theo điều kiện công bố"]
       },
       {
-        name: "PRO600 (BÁN CHẠY NHẤT)",
-        speed: "600 Mbps",
-        price: 880000,
-        description: "Phù hợp công ty quy mô 30 - 60 máy tính, hội họp video online liên tục.",
+        name: "PRO2",
+        speed: "500 Mbps–1 Gbps · quốc tế 5 Mbps",
+        price: 500000,
+        description: "Gói doanh nghiệp. giá tham khảo 500.000đ/tháng đã gồm VAT.",
+        features: ["Băng thông quốc tế cam kết: 5 Mbps", "Modem Wi-Fi", "Trả trước 12 tháng tặng 1 tháng theo điều kiện công bố"]
+      },
+      {
+        name: "MESHPRO1",
+        speed: "400 Mbps–1 Gbps · quốc tế 2 Mbps",
+        price: 400000,
+        description: "Gói doanh nghiệp. giá tham khảo 400.000đ/tháng đã gồm VAT.",
         isHot: true,
-        features: [
-          "Băng thông trong nước: 600 Mbps",
-          "Băng thông quốc tế tối thiểu: 10 Mbps",
-          "Miễn phí 1 IP Tĩnh (Static IP) suốt quá trình sử dụng",
-          "Trang bị Router cân bằng tải chuyên dụng",
-        ],
+        features: ["Băng thông quốc tế cam kết: 2 Mbps", "Modem + Mesh", "Trả trước 12 tháng tặng 1 tháng theo điều kiện công bố"]
       },
       {
-        name: "VIP1000",
-        speed: "1.000 Mbps (1 Gbps)",
-        price: 1900000,
-        description: "Dành cho doanh nghiệp lớn, công ty phần mềm, tòa nhà văn phòng.",
-        features: [
-          "Tốc độ trong nước cực đỉnh 1.000 Mbps",
-          "Băng thông quốc tế tối thiểu: 20 Mbps",
-          "Tặng dải 4 IP Tĩnh",
-          "Đường truyền cáp quang riêng biệt đến tận phòng máy chủ",
-        ],
+        name: "MESHPRO2",
+        speed: "500 Mbps–1 Gbps · quốc tế 5 Mbps",
+        price: 600000,
+        description: "Gói doanh nghiệp. giá tham khảo 600.000đ/tháng đã gồm VAT.",
+        features: ["Băng thông quốc tế cam kết: 5 Mbps", "Modem + Mesh", "Trả trước 12 tháng tặng 1 tháng theo điều kiện công bố"]
       },
+      {
+        name: "PRO600",
+        speed: "600 Mbps · quốc tế 2 Mbps",
+        price: 500000,
+        description: "Gói doanh nghiệp. giá tham khảo 500.000đ/tháng đã gồm VAT.",
+        features: ["Băng thông quốc tế cam kết: 2 Mbps", "Modem Wi-Fi", "Trả trước 12 tháng tặng 1 tháng theo điều kiện công bố"]
+      },
+      {
+        name: "PRO1000",
+        speed: "1 Gbps · quốc tế 10 Mbps",
+        price: 700000,
+        description: "Gói doanh nghiệp. giá tham khảo 700.000đ/tháng đã gồm VAT.",
+        features: ["Băng thông quốc tế cam kết: 10 Mbps", "Modem Wi-Fi", "Trả trước 12 tháng tặng 1 tháng theo điều kiện công bố"]
+      },
+      {
+        name: "MESHPRO600",
+        speed: "600 Mbps · quốc tế 2 Mbps",
+        price: 650000,
+        description: "Gói doanh nghiệp. giá tham khảo 650.000đ/tháng đã gồm VAT.",
+        features: ["Băng thông quốc tế cam kết: 2 Mbps", "Modem + Mesh", "Trả trước 12 tháng tặng 1 tháng theo điều kiện công bố"]
+      },
+      {
+        name: "MESHPRO1000",
+        speed: "1 Gbps · quốc tế 10 Mbps",
+        price: 880000,
+        description: "Gói doanh nghiệp. giá tham khảo 880.000đ/tháng đã gồm VAT.",
+        features: ["Băng thông quốc tế cam kết: 10 Mbps", "Modem + Mesh", "Trả trước 12 tháng tặng 1 tháng theo điều kiện công bố"]
+      }
     ],
     faq: [
       {
         question: "Doanh nghiệp đăng ký cần những thủ tục gì?",
-        answer: "Chỉ cần bản chụp Giấy phép Đăng ký Kinh doanh (GPKD) và CCCD của người đại diện pháp luật. Viettel hỗ trợ ký hợp đồng và xuất hóa đơn điện tử VAT tận nơi.",
+        answer: "Liên hệ Viettel để kiểm tra hạ tầng, hồ sơ cần thiết, phí hòa mạng và chu kỳ đóng cước tại địa chỉ doanh nghiệp. Thông tin gói công bố nêu giá đã gồm VAT; phí và ưu đãi đăng ký cần xác nhận theo khu vực.",
       },
     ],
   },
@@ -354,6 +412,7 @@ const baseServices: Record<string, DetailedService> = {
     tagline: "Trang bị Modem chuẩn Wi-Fi 6 AX3000 thế hệ mới, tốc độ nhanh gấp 3 lần, kết nối mượt mà 50+ thiết bị.",
     badge: "CHUẨN WI-FI 6 MỚI",
     heroBgGradient: "from-[#990020] via-[#EE0033] to-[#0F172A]",
+    heroBackgroundImage: "/assets/hero-internet-hcm.png",
     assetImage: "/assets/wifi6-modem.svg",
     assetAlt: "Modem Wi-Fi 6 Viettel AX3000",
     introText:
@@ -366,40 +425,40 @@ const baseServices: Record<string, DetailedService> = {
     ],
     packages: [
       {
-        name: "GÓI SUN1 WI-FI 6",
-        speed: "150 Mbps",
-        price: 180000,
-        description: "Phù hợp sinh viên, người độc thân hoặc gia đình nhỏ từ 2 - 5 thiết bị.",
+        name: "NETVT01",
+        speed: "300 Mbps",
+        price: 195000,
+        description: "Gói Internet 300 Mbps; giá áp dụng theo khu vực và địa chỉ lắp đặt.",
         features: [
-          "Tốc độ Download/Upload: 150 Mbps",
-          "Trang bị Modem Wi-Fi 6 chính hãng Viettel",
-          "Hỗ trợ kỹ thuật 24/7 tận nhà",
-          "Miễn phí dây cáp quang và công đấu nối",
+          "Giá 195.000đ/tháng tại 32 tỉnh và ngoại thành Hà Nội/TP.HCM",
+          "Nội thành Hà Nội/TP.HCM: NETVT01_H 235.000đ/tháng",
+          "Modem Wi-Fi 6 cho thuê bao lắp mới; giá đã gồm VAT",
+          "Phí hòa mạng 300.000đ; chu kỳ cước 1/6/13 tháng",
         ],
       },
       {
-        name: "GÓI SUN2 WI-FI 6",
-        speed: "250 Mbps",
-        price: 229000,
-        description: "Gói cước bán chạy nhất cho hộ gia đình có nhu cầu xem 4K, chơi game online.",
+        name: "NETVT2",
+        speed: "500 Mbps – 1 Gbps",
+        price: 240000,
+        description: "Băng thông cao; giá NETVT2_H ở nội thành Hà Nội/TP.HCM là 265.000đ/tháng.",
         isHot: true,
         features: [
-          "Tốc độ Download/Upload: 250 Mbps cực nhanh",
-          "Trang bị Modem 2 băng tần 2.4GHz & 5GHz",
-          "Tối ưu ping thấp cho game thủ",
-          "Tặng 1 tháng cước khi đóng trước 6 tháng",
+          "Giá 240.000đ/tháng tại 32 tỉnh và ngoại thành Hà Nội/TP.HCM",
+          "Modem Wi-Fi 6 cho thuê bao lắp mới; giá đã gồm VAT",
+          "Tốc độ thực tế tùy hạ tầng và thiết bị tại địa chỉ",
+          "Phí hòa mạng 300.000đ; ưu đãi cảm biến/bảo hiểm tùy điều kiện khu vực",
         ],
       },
       {
-        name: "GÓI STAR2 WI-FI 6 MESH",
-        speed: "300 Mbps + 2 Mesh",
-        price: 289000,
-        description: "Dành cho nhà tầng, nhà ống dài hoặc biệt thự cần phủ sóng không góc chết.",
+        name: "MESHVT1",
+        speed: "300 Mbps + 1 Mesh",
+        price: 210000,
+        description: "Gói Mesh cơ bản cho nhà nhiều phòng; nội thành Hà Nội/TP.HCM là 255.000đ/tháng.",
         features: [
-          "1 Modem Wi-Fi 6 chính + 2 Bộ phát phụ Mesh Wi-Fi 6",
-          "Công nghệ roaming tự động chuyển trạm liền mạch",
-          "Phủ sóng xuyên tầng mạnh mẽ",
-          "Tặng 2 tháng cước khi đóng trước 12 tháng",
+          "01 Modem Wi-Fi 6 + 01 thiết bị Mesh",
+          "MESHVT2 (2 Mesh): 245.000đ; nội thành: 289.000đ/tháng",
+          "MESHVT3 (3 Mesh): 299.000đ; nội thành: 359.000đ/tháng",
+          "Giá đã gồm VAT; phạm vi và thiết bị xác nhận theo địa chỉ",
         ],
       },
     ],
@@ -418,6 +477,7 @@ const baseServices: Record<string, DetailedService> = {
     tagline: "Hạ tầng 100% cáp quang FTTH Gpon thế hệ mới, đường truyền ổn định không phụ thuộc thời tiết, lắp đặt trong 24h.",
     badge: "HẠ TẦNG SỐ 1 VIỆT NAM",
     heroBgGradient: "from-[#8B0000] via-[#EE0033] to-[#1E293B]",
+    heroBackgroundImage: "/assets/hero-internet-hcm.png",
     assetImage: "/assets/hero-fiber.svg",
     assetAlt: "Hạ tầng Internet Cáp Quang Viettel FTTH",
     introText:
@@ -430,43 +490,55 @@ const baseServices: Record<string, DetailedService> = {
     ],
     packages: [
       {
-        name: "GÓI CƯỚC SUN1",
-        speed: "150 Mbps",
-        price: 180000,
-        description: "Gói cước cơ bản tiết kiệm cho cá nhân và gia đình nhỏ.",
+        name: "NETVT01",
+        speed: "300 Mbps",
+        price: 195000,
+        description: "Giá khu vực 32 tỉnh và ngoại thành Hà Nội/TP.HCM.",
         features: [
-          "Tốc độ 150 Mbps không giới hạn lưu lượng",
-          "Trang bị Modem 2 băng tần chuẩn Gigabit",
-          "Miễn phí bảo trì trọn đời",
-          "Tặng 1 tháng cước khi đóng trước",
+          "Nội thành Hà Nội/TP.HCM (NETVT01_H): 235.000đ/tháng",
+          "Modem Wi-Fi 6 cho thuê bao lắp mới",
+          "Giá đã gồm VAT; phí hòa mạng 300.000đ",
+          "Chu kỳ cước 1, 6 hoặc 13 tháng",
         ],
       },
       {
-        name: "GÓI CƯỚC SUN2",
-        speed: "250 Mbps",
-        price: 229000,
-        description: "Băng thông mạnh mẽ cho gia đình đa thiết bị giải trí.",
+        name: "NETVT2",
+        speed: "500 Mbps – 1 Gbps",
+        price: 240000,
+        description: "Giá khu vực 32 tỉnh và ngoại thành; nội thành Hà Nội/TP.HCM là 265.000đ.",
         isHot: true,
         features: [
-          "Tốc độ 250 Mbps lướt web, xem phim mượt mà",
-          "Modem Wi-Fi thế hệ mới phát sóng xa",
-          "Ưu tiên luồng băng thông trong nước",
-          "Miễn phí modem và công lắp",
+          "Modem Wi-Fi 6 cho thuê bao lắp mới",
+          "Giá đã gồm VAT; phí hòa mạng 300.000đ",
+          "Tốc độ thực tế tùy hạ tầng và thiết bị tại địa chỉ",
+          "Ưu đãi cảm biến khói/bảo hiểm tùy khu vực và điều kiện đóng trước",
         ],
       },
       {
-        name: "GÓI CƯỚC STAR1 (MESH)",
-        speed: "150 Mbps Mesh",
+        name: "MESHVT1",
+        speed: "300 Mbps + 1 Mesh",
         price: 210000,
-        description: "Khắc phục triệt để tình trạng sóng yếu ở các góc phòng khuất.",
+        description: "Nội thành Hà Nội/TP.HCM: 255.000đ; MESHVT2 từ 245.000đ/tháng.",
         features: [
-          "Trang bị 1 Modem chính + 1 Home Wifi Mesh",
-          "Tự động chuyển vùng không gián đoạn kết nối",
-          "Thích hợp nhà 2 - 3 tầng diện tích vừa",
-          "Tặng thêm tháng cước khi đóng dài hạn",
+          "01 Modem Wi-Fi 6 + 01 thiết bị Mesh",
+          "MESHVT2 (2 Mesh): 245.000đ; nội thành: 289.000đ/tháng",
+          "MESHVT3 (3 Mesh): 299.000đ; nội thành: 359.000đ/tháng",
+          "Giá đã gồm VAT; thiết bị/ưu đãi xác nhận theo địa chỉ",
         ],
       },
     ],
+    priceTable: {
+      title: "Bảng giá Internet cáp quang Viettel TP.HCM",
+      columns: ["Gói cước", "Tốc độ", "Ngoại thành", "Nội thành", "Thiết bị"],
+      rows: [
+        { name: "NETVT1", values: ["300 Mbps", "195.000đ", "235.000đ", "Modem Wi-Fi 6"] },
+        { name: "NETVT2", values: ["500 Mbps – 1 Gbps", "240.000đ", "265.000đ", "Modem Wi-Fi 6"] },
+        { name: "MESHVT1", values: ["300 Mbps", "210.000đ", "255.000đ", "1 Home Wi-Fi Mesh"], featured: true },
+        { name: "MESHVT2", values: ["500 Mbps – 1 Gbps", "245.000đ", "289.000đ", "2 Home Wi-Fi Mesh"] },
+        { name: "MESHVT3", values: ["500 Mbps – 1 Gbps", "299.000đ", "359.000đ", "3 Home Wi-Fi Mesh"] },
+      ],
+      note: "Giá tham khảo Viettel TP.HCM tháng 11/2026, đồng/tháng, đã gồm VAT. Tốc độ phụ thuộc hạ tầng tại địa chỉ; ưu đãi trả trước, thiết bị và phí hòa mạng cần xác nhận trước khi đăng ký.",
+    },
     faq: [
       {
         question: "Cần giấy tờ gì khi đăng ký lắp mạng Viettel?",

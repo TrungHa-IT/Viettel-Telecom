@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { 
@@ -12,6 +12,7 @@ import {
   Zap, 
   Send, 
   ArrowRight, 
+  ChevronLeft,
   Flame, 
   Camera, 
   Briefcase, 
@@ -47,7 +48,9 @@ export default function HomePageClient({
   pages: PageItem[];
 }) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedPackage, setSelectedPackage] = useState<string>(packages[0]?.name || "SUN1");
+  const packageTrackRef = useRef<HTMLDivElement>(null);
+  const [carouselProgress, setCarouselProgress] = useState(0);
+  const [selectedPackage, setSelectedPackage] = useState<string>(packages[0]?.name || "NETVT1 (Ngoại thành)");
   const [formData, setFormData] = useState({
     customer_name: "",
     phone: "",
@@ -61,6 +64,16 @@ export default function HomePageClient({
     if (selectedCategory === "all") return true;
     return p.category === selectedCategory;
   });
+
+  const scrollPackages = (direction: -1 | 1) => {
+    const track = packageTrackRef.current;
+    const firstCard = track?.firstElementChild as HTMLElement | null;
+    if (!track || !firstCard) return;
+    const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+    track.scrollBy({ left: direction * (firstCard.offsetWidth + gap), behavior: "smooth" });
+  };
+
+  const dragState = useRef<{ pointerId: number; startX: number; scrollLeft: number } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,7 +119,10 @@ export default function HomePageClient({
       <Header />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#8B0000] via-[#EE0033] to-[#B30024] text-white py-16 lg:py-24 px-4 shadow-md">
+      <section
+        className="relative overflow-hidden bg-gradient-to-br from-[#8B0000] via-[#EE0033] to-[#B30024] bg-cover bg-center text-white py-16 lg:py-24 px-4 shadow-md"
+        style={{ backgroundImage: 'linear-gradient(90deg, rgba(116, 0, 26, .92), rgba(195, 0, 42, .78)), url("/assets/hero-internet-hcm.png")' }}
+      >
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-black tracking-wider border border-white/20 text-yellow-300 animate-pulse-glow">
@@ -117,7 +133,7 @@ export default function HomePageClient({
               <span className="text-yellow-300">Viettel Wi-Fi 6 & 7</span> Siêu Tốc
             </h1>
             <p className="text-white/90 text-base sm:text-lg max-w-xl font-medium leading-relaxed mx-auto lg:mx-0">
-              Trang bị miễn phí Modem Wi-Fi thế hệ mới. Đăng ký ngay hôm nay để nhận ưu đãi tặng cước lên tới 2 tháng và miễn phí lắp đặt 100%.
+              Chọn gói Internet từ 300 Mbps đến 2 Gbps, Wi-Fi 6/7, Mesh và TV360. Cước, thiết bị và ưu đãi được xác nhận theo khu vực và địa chỉ lắp đặt.
             </p>
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
               <a
@@ -231,12 +247,63 @@ export default function HomePageClient({
           ))}
         </div>
 
-        {/* Packages Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <p className="mb-8 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-center text-xs leading-relaxed text-slate-700">
+          Giá tham khảo Viettel TP.HCM tháng 11/2026, đã gồm VAT. Giá, thiết bị và ưu đãi có thể khác theo khu vực nội thành/ngoại thành, hạ tầng và lựa chọn TV360 App/Box; vui lòng xác nhận theo địa chỉ lắp đặt.
+        </p>
+
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs font-medium text-slate-500">
+            Đang hiển thị {Math.min(filteredPackages.length, 3)} gói mỗi lượt · Kéo ngang để xem đủ {filteredPackages.length} gói
+          </p>
+          <div className="flex gap-2">
+            <button type="button" onClick={() => scrollPackages(-1)} aria-label="Xem các gói trước" className="grid h-10 w-10 place-items-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-[#EE0033] hover:text-[#EE0033]">
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button type="button" onClick={() => scrollPackages(1)} aria-label="Xem các gói tiếp theo" className="grid h-10 w-10 place-items-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-[#EE0033] hover:text-[#EE0033]">
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Packages carousel */}
+        <div
+          key={selectedCategory}
+          ref={packageTrackRef}
+          onPointerDown={(event) => {
+            if (event.pointerType === "mouse" && event.button !== 0) return;
+            const track = packageTrackRef.current;
+            if (!track) return;
+            dragState.current = { pointerId: event.pointerId, startX: event.clientX, scrollLeft: track.scrollLeft };
+            track.setPointerCapture(event.pointerId);
+            track.classList.add("cursor-grabbing", "select-none");
+          }}
+          onPointerMove={(event) => {
+            const drag = dragState.current;
+            const track = packageTrackRef.current;
+            if (!drag || !track || drag.pointerId !== event.pointerId) return;
+            track.scrollLeft = drag.scrollLeft - (event.clientX - drag.startX);
+          }}
+          onScroll={(event) => {
+            const track = event.currentTarget;
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            setCarouselProgress(maxScroll > 0 ? track.scrollLeft / maxScroll : 0);
+          }}
+          onPointerUp={(event) => {
+            const track = packageTrackRef.current;
+            if (dragState.current?.pointerId === event.pointerId) dragState.current = null;
+            track?.classList.remove("cursor-grabbing", "select-none");
+          }}
+          onPointerCancel={() => {
+            dragState.current = null;
+            packageTrackRef.current?.classList.remove("cursor-grabbing", "select-none");
+          }}
+          className="flex cursor-grab touch-pan-y snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-5 [scrollbar-color:#ee0033_#e2e8f0] [scrollbar-width:thin]"
+          aria-label="Danh sách gói cước, kéo ngang để xem thêm"
+        >
           {filteredPackages.map((pkg) => (
             <div
               key={pkg.id}
-              className={`bg-white rounded-3xl border transition duration-300 flex flex-col justify-between overflow-hidden relative shadow-sm hover:shadow-xl hover:-translate-y-1 ${
+              className={`w-full shrink-0 snap-start rounded-3xl border bg-white transition duration-300 flex flex-col justify-between overflow-hidden relative shadow-sm hover:shadow-xl hover:-translate-y-1 sm:basis-[calc(50%_-_0.75rem)] lg:basis-[calc(33.333%_-_1rem)] ${
                 pkg.badge ? "border-[#EE0033] ring-2 ring-[#EE0033]/20" : "border-slate-200"
               }`}
             >
@@ -289,6 +356,9 @@ export default function HomePageClient({
               </div>
             </div>
           ))}
+        </div>
+        <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-200" aria-hidden="true">
+          <div className="h-full rounded-full bg-gradient-to-r from-[#EE0033] via-[#ff6b45] to-[#ffc247] transition-[width] duration-200" style={{ width: `${filteredPackages.length > 3 ? 25 + carouselProgress * 75 : 100}%` }} />
         </div>
       </section>
 

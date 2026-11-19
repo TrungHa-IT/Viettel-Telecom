@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { PhoneCall, Radio, Trophy, Zap, Menu, X, Shield, Tv, Camera, Briefcase } from "lucide-react";
 
@@ -47,17 +48,7 @@ export default function Header({ activeSlug }: { activeSlug?: string }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-11 h-11 rounded-2xl bg-[#EE0033] flex items-center justify-center text-white font-black text-2xl shadow-md group-hover:scale-105 transition-transform duration-200">
-                V
-              </div>
-              <div className="leading-tight">
-                <span className="text-2xl font-black text-[#EE0033] tracking-tighter block group-hover:text-[#CC002B] transition-colors">
-                  VIETTEL
-                </span>
-                <span className="text-[10px] font-bold text-slate-400 tracking-widest block uppercase">
-                  TELECOM
-                </span>
-              </div>
+              <Image src="/assets/logo-viettel-hcm.png" alt="Viettel Telecom" width={118} height={34} priority className="h-auto w-[118px] transition-transform duration-200 group-hover:scale-[1.03]" />
             </Link>
 
             {/* Desktop Navigation */}

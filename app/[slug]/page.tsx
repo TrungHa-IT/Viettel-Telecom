@@ -5,13 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import EnterpriseContactWidget from "@/components/EnterpriseContactWidget";
 import { 
   PhoneCall, 
   CheckCircle2, 
   HelpCircle, 
   Sparkles,
   Flame,
-  ArrowRight
+  ArrowRight,
+  MessageCircle
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -58,7 +60,7 @@ function sanitizeDbContent(html: string): string {
   let cleaned = html.replace(/<img[^>]*src=["']data:image\/gif;base64[^"']*["'][^>]*>/gi, "");
   // 2. Remove broken localhost:3000 images or replace with local logo
   cleaned = cleaned.replace(/<img[^>]*src=["']https?:\/\/localhost:3000\/[^"']*["'][^>]*>/gi, "");
-  cleaned = cleaned.replace(/data-src=["']https?:\/\/localhost:3000\/[^"']*["']/gi, 'src="/assets/logo-viettel.svg"');
+  cleaned = cleaned.replace(/data-src=["']https?:\/\/localhost:3000\/[^"']*["']/gi, 'src="/assets/logo-viettel-hcm.png"');
   cleaned = cleaned.replace(/srcset=["'][^"']*["']/gi, "");
   cleaned = cleaned.replace(/data-srcset=["'][^"']*["']/gi, "");
   // 3. Clean broken WordPress classes & duplicate wrapper tags
@@ -96,7 +98,10 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
         <Header activeSlug={slug} />
 
         {/* Hero Section */}
-        <section className={`bg-gradient-to-br ${customService.heroBgGradient} text-white py-16 px-4 relative overflow-hidden shadow-md`}>
+        <section
+          className={`bg-gradient-to-br ${customService.heroBgGradient} text-white py-16 px-4 relative overflow-hidden shadow-md bg-cover bg-center`}
+          style={customService.heroBackgroundImage ? { backgroundImage: `linear-gradient(90deg, rgba(7, 14, 29, .88) 0%, rgba(7, 14, 29, .74) 58%, rgba(7, 14, 29, .52) 100%), url("${customService.heroBackgroundImage}")` } : undefined}
+        >
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             <div className="lg:col-span-7 space-y-5">
               <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-black tracking-wider border border-white/20 text-yellow-300">
@@ -172,7 +177,30 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {customService.priceTable && (
+            <div className="mb-10">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 mb-4">{customService.priceTable.title}</h3>
+              <p className="text-sm text-slate-600 mb-4">Đơn vị: đồng/tháng</p>
+              <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <table className="w-full min-w-[760px] text-left text-sm">
+                  <thead className="bg-slate-900 text-white">
+                    <tr>{customService.priceTable.columns.map((column) => <th key={column} scope="col" className="px-4 py-3 font-bold">{column}</th>)}</tr>
+                  </thead>
+                  <tbody>
+                    {customService.priceTable.rows.map((row) => (
+                      <tr key={row.name} className={row.featured ? "bg-red-50" : "even:bg-slate-50"}>
+                        <th scope="row" className="px-4 py-4 font-black text-slate-900 whitespace-nowrap">{row.name}{row.featured && <span className="ml-2 rounded-full bg-[#EE0033] px-2 py-1 text-[10px] text-white">PHỔ BIẾN</span>}</th>
+                        {row.values.map((value, index) => <td key={`${row.name}-${index}`} className="px-4 py-4 text-slate-700 whitespace-nowrap">{value}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs leading-relaxed text-slate-700">{customService.priceTable.note}</p>
+            </div>
+          )}
+
+          {!customService.priceTable && <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {customService.packages.map((pkg, idx) => (
               <div
                 key={idx}
@@ -218,7 +246,7 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
                 </div>
               </div>
             ))}
-          </div>
+          </div>}
         </section>
 
         {/* Specifications Table */}
@@ -290,10 +318,24 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
+            {slug === "viettel-internet-doanh-nghiep" && (
+              <div className="pt-5">
+                <p className="mb-3 text-sm font-semibold text-slate-300">Kết nối và nhận tư vấn trực tuyến</p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  <a href="https://zalo.me/viettel198" target="_blank" rel="noopener noreferrer" aria-label="Nhắn tin Zalo Viettel" className="inline-flex items-center gap-2 rounded-xl bg-[#0068ff] px-5 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700">
+                    <MessageCircle className="h-5 w-5" /> Nhắn tin Zalo
+                  </a>
+                  <a href="https://www.facebook.com/Vietteltelecom" target="_blank" rel="noopener noreferrer" aria-label="Truy cập Facebook Viettel Telecom" className="inline-flex items-center gap-2 rounded-xl bg-[#1877f2] px-5 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 fill-current"><path d="M13.5 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.6 1.6-1.6h1.7V3.1c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5v2.1H7v3.2h2.8V21h3.7z" /></svg> Facebook Viettel
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
         {/* Global Footer */}
+        {slug === "viettel-internet-doanh-nghiep" && <EnterpriseContactWidget />}
         <Footer />
       </div>
     );

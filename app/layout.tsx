@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: "Viettel Telecom",
     images: [
       {
-        url: "/assets/logo-viettel.svg",
+        url: "/assets/logo-viettel-hcm.png",
         width: 600,
         height: 160,
         alt: "Logo Viettel Telecom",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Viettel Telecom - Lắp Mạng Cáp Quang & Truyền Hình TV360",
     description: "Đăng ký lắp đặt Internet cáp quang Viettel, TV360, Camera Cloud bảo mật.",
-    images: ["/assets/logo-viettel.svg"],
+    images: ["/assets/logo-viettel-hcm.png"],
   },
   icons: {
     icon: "/favicon.ico",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { 
@@ -40,6 +40,13 @@ export interface PageItem {
   title: string;
 }
 
+const homeHeroSlides = [
+  { src: "/assets/home-slide-combo.png", label: "Combo Internet, Camera và TV360" },
+  { src: "/assets/home-slide-wifi.png", label: "Home Wi-Fi Viettel" },
+  { src: "/assets/home-slide-tv360.png", label: "TV360 Viettel" },
+  { src: "/assets/home-slide-camera.png", label: "Camera Viettel" },
+];
+
 export default function HomePageClient({
   packages,
   pages,
@@ -48,6 +55,7 @@ export default function HomePageClient({
   pages: PageItem[];
 }) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const packageTrackRef = useRef<HTMLDivElement>(null);
   const [carouselProgress, setCarouselProgress] = useState(0);
   const [selectedPackage, setSelectedPackage] = useState<string>(packages[0]?.name || "NETVT1 (Ngoại thành)");
@@ -59,6 +67,12 @@ export default function HomePageClient({
   });
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setHeroSlideIndex((current) => (current + 1) % homeHeroSlides.length);
+    }, 10_000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const filteredPackages = packages.filter((p) => {
     if (selectedCategory === "all") return true;
@@ -105,7 +119,7 @@ export default function HomePageClient({
   };
 
   const topServices = [
-    { title: "Ngoại Hạng Anh Mới", slug: "viettel-ngoai-hang-anh", icon: Trophy, badge: "HOT" },
+    { title: "Champions League trên TV360", slug: "viettel-champions-league", icon: Trophy, badge: "HOT" },
     { title: "Wifi 7 Siêu Tốc", slug: "viettel-wifi-7", icon: Zap, badge: "MỚI" },
     { title: "Gói Wifi 6", slug: "dich-vu-viettel-wifi-6", icon: Wifi, badge: "" },
     { title: "Combo TV360", slug: "combo-internet-truyen-hinh-viettel", icon: Tv, badge: "ƯU ĐÃI" },
@@ -120,10 +134,19 @@ export default function HomePageClient({
 
       {/* Hero Section */}
       <section
-        className="relative overflow-hidden bg-gradient-to-br from-[#8B0000] via-[#EE0033] to-[#B30024] bg-cover bg-center text-white py-16 lg:py-24 px-4 shadow-md"
-        style={{ backgroundImage: 'linear-gradient(90deg, rgba(116, 0, 26, .92), rgba(195, 0, 42, .78)), url("/assets/hero-internet-hcm.png")' }}
+        className="relative isolate overflow-hidden bg-gradient-to-br from-[#8B0000] via-[#EE0033] to-[#B30024] px-4 py-16 text-white shadow-md lg:py-24"
       >
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="absolute inset-0" aria-hidden="true">
+          {homeHeroSlides.map((slide, index) => (
+            <div
+              key={slide.src}
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${index === heroSlideIndex ? "opacity-100" : "opacity-0"}`}
+              style={{ backgroundImage: `url("${slide.src}")`, backgroundPosition: "center bottom" }}
+            />
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#750019]/90 via-[#9d0026]/75 to-[#450014]/70" />
+        </div>
+        <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-black tracking-wider border border-white/20 text-yellow-300 animate-pulse-glow">
               <Sparkles className="w-4 h-4" /> BĂNG THÔNG KHÔNG GIỚI HẠN 2026
@@ -180,6 +203,19 @@ export default function HomePageClient({
               </div>
             </div>
           </div>
+        </div>
+        <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/20 bg-slate-950/30 px-3 py-2 backdrop-blur-sm" aria-label="Chọn ảnh nền trang chủ">
+          {homeHeroSlides.map((slide, index) => (
+            <button
+              key={slide.src}
+              type="button"
+              onClick={() => setHeroSlideIndex(index)}
+              aria-label={`Hiện ảnh: ${slide.label}`}
+              aria-current={heroSlideIndex === index ? "true" : undefined}
+              className={`h-2.5 rounded-full transition-all duration-300 ${heroSlideIndex === index ? "w-8 bg-white" : "w-2.5 bg-white/55 hover:bg-white/85"}`}
+            />
+          ))}
+          <span className="ml-1 text-[10px] font-semibold text-white/90">Đổi ảnh 10 giây</span>
         </div>
       </section>
 
@@ -550,12 +586,12 @@ export default function HomePageClient({
       {/* Floating Hotline / Contact Widget */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
         <a
-          href="tel:18008168"
+          href="tel:0944362986"
           className="bg-[#EE0033] hover:bg-[#CC002B] text-white p-3.5 sm:px-5 sm:py-3 rounded-full font-bold shadow-2xl flex items-center gap-2 animate-bounce-subtle group transition"
-          aria-label="Gọi hotline 1800 8168"
+          aria-label="Gọi nhân viên tư vấn 0944 362 986"
         >
           <PhoneCall className="w-5 h-5 animate-pulse" />
-          <span className="hidden sm:inline text-xs">Hotline: 1800 8168</span>
+          <span className="hidden sm:inline text-xs">Tư vấn: 0944 362 986</span>
         </a>
       </div>
 

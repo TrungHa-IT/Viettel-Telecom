@@ -14,7 +14,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-white font-extrabold text-sm tracking-wide">
-                  TỔNG ĐẠI LÝ LẮP ĐẶT VIETTEL TELECOM
+                  TƯ VẤN DỊCH VỤ VIETTEL TELECOM
                 </p>
                 <p className="text-slate-400 text-xs">
                   Tập đoàn Công nghiệp - Viễn thông Quân đội
@@ -52,8 +52,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/viettel-ngoai-hang-anh" className="hover:text-white text-yellow-400 font-semibold transition">
-                  Ngoại Hạng Anh TV360
+                <Link href="/viettel-champions-league" className="hover:text-white text-yellow-400 font-semibold transition">
+                  Champions League trên TV360
                 </Link>
               </li>
               <li>
@@ -81,14 +81,14 @@ export default function Footer() {
             </h4>
             <div className="space-y-2">
               <a
-                href="tel:18008168"
+                href="tel:0944362986"
                 className="inline-flex items-center gap-2 bg-[#EE0033] hover:bg-[#CC002B] text-white font-bold px-4 py-2.5 rounded-xl transition shadow-sm"
               >
                 <PhoneCall className="w-4 h-4" />
-                <span>Tổng đài: 1800 8168</span>
+                <span>Nhân viên tư vấn: 0944 362 986</span>
               </a>
               <p className="text-slate-400 text-[11px]">
-                Miễn phí cước gọi từ mọi thuê bao di động.
+                Gọi trực tiếp nhân viên tư vấn để được hỗ trợ.
               </p>
               <div className="pt-2">
                 <Link
@@ -103,7 +103,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-slate-800 text-center text-slate-500 text-[11px]">
-          © {new Date().getFullYear()} Viettel Telecom. Bản quyền thuộc Tập đoàn Công nghiệp - Viễn thông Quân đội.
+          Trang thông tin tư vấn dịch vụ Viettel; không phải website chính thức vietteltelecom.vn. Tên Viettel và TV360 thuộc chủ sở hữu tương ứng. Giá, ưu đãi và quyền lợi áp dụng theo công bố chính thức tại thời điểm đăng ký.
         </div>
       </div>
     </footer>

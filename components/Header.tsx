@@ -11,7 +11,7 @@ export default function Header({ activeSlug }: { activeSlug?: string }) {
   const navLinks = [
     { href: "/", label: "Trang Chủ", slug: "" },
     { href: "/viettel-wifi-7", label: "Wi-Fi 7", slug: "viettel-wifi-7", badge: "MỚI", icon: Zap },
-    { href: "/viettel-ngoai-hang-anh", label: "Ngoại Hạng Anh", slug: "viettel-ngoai-hang-anh", badge: "HOT", icon: Trophy },
+    { href: "/viettel-champions-league", label: "Champions League", slug: "viettel-champions-league", badge: "HOT", icon: Trophy },
     { href: "/combo-internet-truyen-hinh-viettel", label: "Combo TV360", slug: "combo-internet-truyen-hinh-viettel", icon: Tv },
     { href: "/dich-vu-camera-viettel", label: "Camera Viettel", slug: "dich-vu-camera-viettel", icon: Camera },
     { href: "/viettel-internet-doanh-nghiep", label: "Doanh Nghiệp", slug: "viettel-internet-doanh-nghiep", icon: Briefcase },
@@ -30,7 +30,7 @@ export default function Header({ activeSlug }: { activeSlug?: string }) {
           </span>
           <div className="flex items-center gap-4 text-[11px] sm:text-xs">
             <span className="hidden md:inline">
-              Tổng đài tư vấn: <strong className="text-yellow-300 font-bold">1800 8168</strong>
+              Nhân viên tư vấn: <strong className="text-yellow-300 font-bold">0944 362 986</strong>
             </span>
             <Link
               href="/admin/login"
@@ -87,11 +87,11 @@ export default function Header({ activeSlug }: { activeSlug?: string }) {
 
           <div className="flex items-center gap-3">
             <a
-              href="tel:18008168"
+              href="tel:0944362986"
               className="bg-[#EE0033] hover:bg-[#CC002B] text-white px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md shadow-red-500/20 hover:shadow-lg transition duration-200"
             >
               <PhoneCall className="w-4 h-4 animate-bounce" />
-              <span>1800 8168</span>
+              <span>0944 362 986</span>
             </a>
 
             {/* Mobile Hamburger Button */}

@@ -101,9 +101,6 @@ export default function AdminLoginPage() {
                 placeholder="••••••••••••"
               />
             </div>
-            <p className="text-xs text-neutral-400 mt-1 italic">
-              Tài khoản mẫu: <span className="text-neutral-600 font-mono">admin</span> / <span className="text-neutral-600 font-mono">Viettel@2026</span>
-            </p>
           </div>
 
           <button

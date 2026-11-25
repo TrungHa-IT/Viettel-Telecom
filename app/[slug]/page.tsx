@@ -6,6 +6,8 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import EnterpriseContactWidget from "@/components/EnterpriseContactWidget";
+import Wifi7LandingPage from "@/components/Wifi7LandingPage";
+import ServiceLandingPage from "@/components/ServiceLandingPage";
 import { 
   PhoneCall, 
   CheckCircle2, 
@@ -26,8 +28,9 @@ export async function generateMetadata({
   const canonicalSlug = slug.includes("fpt") 
     ? slug.replace(/fpt/gi, "viettel").replace(/-+/g, "-").replace(/^-|-$/g, "")
     : slug;
+  const resolvedSlug = canonicalSlug === "viettel-ngoai-hang-anh" ? "viettel-champions-league" : canonicalSlug;
 
-  const customService = servicesData[canonicalSlug] || servicesData[slug];
+  const customService = servicesData[resolvedSlug] || servicesData[canonicalSlug] || servicesData[slug];
   if (customService) {
     return {
       title: customService.title,
@@ -35,7 +38,6 @@ export async function generateMetadata({
       openGraph: {
         title: customService.title,
         description: customService.tagline,
-        url: `https://vietteltelecom.vn/${canonicalSlug}`,
         images: [{ url: customService.assetImage, alt: customService.assetAlt }],
       },
     };
@@ -75,6 +77,10 @@ function sanitizeDbContent(html: string): string {
 export default async function DynamicPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
+  if (slug === "viettel-ngoai-hang-anh") {
+    redirect("/viettel-champions-league");
+  }
+
   // Auto redirect any legacy fpt slug to viettel slug
   if (slug.includes("fpt")) {
     const cleanSlug = slug.replace(/fpt/gi, "viettel").replace(/-+/g, "-").replace(/^-|-$/g, "");
@@ -88,6 +94,19 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
 
   if (!customService && !dbPage) {
     notFound();
+  }
+
+  if (customService && slug === "viettel-wifi-7") {
+    return <Wifi7LandingPage />;
+  }
+
+  if (customService && [
+    "viettel-champions-league",
+    "combo-internet-truyen-hinh-viettel",
+    "dich-vu-camera-viettel",
+    "viettel-internet-doanh-nghiep",
+  ].includes(slug)) {
+    return <ServiceLandingPage service={customService} />;
   }
 
   // Pure Tailwind Component View for rich custom services
@@ -164,6 +183,15 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-normal">
             {customService.introText}
           </p>
+          {customService.officialSources && (
+            <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+              {customService.officialSources.map((source) => (
+                <a key={source.url} href={source.url} target="_blank" rel="noopener noreferrer" className="font-bold text-[#EE0033] underline underline-offset-2 hover:text-[#B30024]">
+                  {source.label} ↗
+                </a>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Packages Grid */}
@@ -304,11 +332,11 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
             </p>
             <div className="pt-4 flex flex-wrap justify-center gap-4">
               <a
-                href="tel:18008168"
+                href="tel:0944362986"
                 className="bg-[#EE0033] hover:bg-[#CC002B] text-white font-extrabold px-8 py-4 rounded-xl text-base flex items-center gap-2 shadow-lg"
               >
                 <PhoneCall className="w-5 h-5 animate-bounce" />
-                <span>HOTLINE: 1800 8168</span>
+                <span>TƯ VẤN: 0944 362 986</span>
               </a>
               <Link
                 href="/#register-form"
@@ -322,10 +350,10 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
               <div className="pt-5">
                 <p className="mb-3 text-sm font-semibold text-slate-300">Kết nối và nhận tư vấn trực tuyến</p>
                 <div className="flex flex-wrap justify-center gap-3">
-                  <a href="https://zalo.me/viettel198" target="_blank" rel="noopener noreferrer" aria-label="Nhắn tin Zalo Viettel" className="inline-flex items-center gap-2 rounded-xl bg-[#0068ff] px-5 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700">
+                  <a href="https://zalo.me/0944362986" target="_blank" rel="noopener noreferrer" aria-label="Nhắn tin Zalo 0944 362 986" className="inline-flex items-center gap-2 rounded-xl bg-[#0068ff] px-5 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700">
                     <MessageCircle className="h-5 w-5" /> Nhắn tin Zalo
                   </a>
-                  <a href="https://www.facebook.com/Vietteltelecom" target="_blank" rel="noopener noreferrer" aria-label="Truy cập Facebook Viettel Telecom" className="inline-flex items-center gap-2 rounded-xl bg-[#1877f2] px-5 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700">
+                  <a href="https://www.facebook.com/ha.trung.585" target="_blank" rel="noopener noreferrer" aria-label="Truy cập Facebook tư vấn" className="inline-flex items-center gap-2 rounded-xl bg-[#1877f2] px-5 py-3 font-bold text-white shadow-lg transition hover:bg-blue-700">
                     <svg aria-hidden="true" viewBox="0 0 24 24" className="h-5 w-5 fill-current"><path d="M13.5 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.6 1.6-1.6h1.7V3.1c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5v2.1H7v3.2h2.8V21h3.7z" /></svg> Facebook Viettel
                   </a>
                 </div>
@@ -363,11 +391,11 @@ export default async function DynamicPage({ params }: { params: Promise<{ slug: 
               <p className="text-slate-500 text-xs">Liên hệ tổng đài Viettel miễn phí 24/7</p>
             </div>
             <a
-              href="tel:18008168"
+              href="tel:0944362986"
               className="bg-[#EE0033] hover:bg-[#CC002B] text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition"
             >
               <PhoneCall className="w-4 h-4" />
-              <span>1800 8168</span>
+              <span>0944 362 986</span>
             </a>
           </div>
         </article>

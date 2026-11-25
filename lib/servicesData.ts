@@ -1,3 +1,5 @@
+import { wifi7Plans } from "@/lib/wifi7Plans";
+
 export interface DetailedService {
   slug: string;
   title: string;
@@ -6,6 +8,11 @@ export interface DetailedService {
   badge: string;
   heroBgGradient: string;
   heroBackgroundImage?: string;
+  galleryImages?: { src: string; alt: string; title: string; caption: string }[];
+  deviceProducts?: {
+    name: string; image: string; alt: string; summary: string; specs: string[];
+    tiers: { retention: string; price: number; packageName: string }[];
+  }[];
   assetImage: string;
   assetAlt: string;
   introText: string;
@@ -32,146 +39,98 @@ export interface DetailedService {
     question: string;
     answer: string;
   }[];
+  officialSources?: { label: string; url: string }[];
 }
 
 const baseServices: Record<string, DetailedService> = {
   "viettel-wifi-7": {
     slug: "viettel-wifi-7",
-    title: "Viettel WiFi 7 – Đột Phá Băng Thông Không Dây Thế Hệ Mới",
-    headline: "CÔNG NGHỆ INTERNET WI-FI 7 ĐỘT PHÁ",
-    tagline: "Băng thông siêu khủng tới 10 Gbps, độ trễ tiệm cận 0ms, công nghệ MLO đa băng tần đồng thời.",
-    badge: "TIÊN PHONG CÔNG NGHỆ 2026",
+    title: "Internet Wi-Fi 7 Viettel – Gói GIGA từ 279.000đ/tháng",
+    headline: "WI-FI 7 VIETTEL — KẾT NỐI TỐC ĐỘ GIGABIT",
+    tagline: "Chọn gói GIGA tốc độ đến 2 Gbps, kết hợp Modem Wi-Fi 7 và Mesh theo nhu cầu không gian.",
+    badge: "XGS-PON · Wi-Fi 7",
     heroBgGradient: "from-[#8B0000] via-[#EE0033] to-[#B30024]",
     heroBackgroundImage: "/assets/hero-internet-hcm.png",
     assetImage: "/assets/wifi7-modem.svg",
-    assetAlt: "Modem Viettel Wi-Fi 7 BE3600",
-    introText:
-      "Viettel Telecom tự hào giới thiệu công nghệ Wi-Fi 7 (chuẩn 802.11be) đột phá. Khả năng gộp kênh 320MHz cùng điều chế 4096-QAM giúp tốc độ truyền tải tăng gấp 4.8 lần so với Wi-Fi 6, phục vụ tối đa nhu cầu xem video 8K, thực tế ảo VR/AR và gaming eSports đỉnh cao.",
+    assetAlt: "Thiết bị Modem Wi-Fi 7 Viettel",
+    introText: "Các gói GIGA dùng kết nối cáp quang XGS-PON và thiết bị Wi-Fi 7. Chọn cấu hình từ một modem đến ba thiết bị Mesh, với tốc độ gói 1 Gbps hoặc 2 Gbps. Giá và khả năng lắp đặt cần được xác nhận theo địa chỉ.",
     highlights: [
-      "Băng thông kênh siêu rộng 320 MHz trên dải tần 6 GHz",
-      "Điều chế 4K-QAM tăng 20% dung lượng dữ liệu truyền tải",
-      "Tính năng Multi-Link Operation (MLO) gộp nhiều băng tần chống rớt mạng",
-      "Độ trễ siêu thấp dưới 1ms, không giật lag khi chơi game",
+      "Gói GIGA tốc độ 1 Gbps hoặc 2 Gbps",
+      "Modem Wi-Fi 7 và tùy chọn Mesh theo từng gói",
+      "Công nghệ Wi-Fi 7: MLO, 4096-QAM, kênh đến 320 MHz",
+      "Cước đã gồm VAT; hạ tầng XGS-PON cần sẵn sàng tại địa chỉ",
     ],
-    packages: [
-      {
-        name: "VIETTEL SPEED X1",
-        speed: "1 Gbps không giới hạn",
-        price: 350000,
-        description: "Trang bị Modem Wi-Fi 7 thế hệ mới, tối ưu cho streamer và người sáng tạo nội dung.",
-        isHot: true,
-        features: [
-          "1 Thiết bị Modem Wi-Fi 7 BE3600 chính hãng Viettel",
-          "Tốc độ Download/Upload: Không giới hạn (tối đa 1 Gbps)",
-          "Hỗ trợ kết nối cùng lúc hơn 120 thiết bị",
-          "Miễn phí công lắp đặt và vật tư cáp quang",
-        ],
-      },
-      {
-        name: "VIETTEL SPEED X2 (MESH)",
-        speed: "2 Gbps Băng thông lớn",
-        price: 520000,
-        description: "Hệ thống Mesh Wi-Fi 7 phủ sóng toàn diện cho biệt thự, nhà nhiều tầng, quán cafe lớn.",
-        features: [
-          "1 Modem Wi-Fi 7 chính + 1 Bộ phụ Wi-Fi 7 Mesh",
-          "Phủ sóng xuyên tường tới 250m², vùng chết sóng bằng 0",
-          "Chuyển vùng Roaming tức thì dưới 10ms",
-          "Tặng 1 tháng cước khi thanh toán trước 6 tháng",
-        ],
-      },
-      {
-        name: "VIETTEL SPEED PRO 10G",
-        speed: "10 Gbps Chuyên Nghiệp",
-        price: 1200000,
-        description: "Dành riêng cho studio đồ họa, phòng game cao cấp và văn phòng công nghệ cao.",
-        features: [
-          "Trang bị Router Wi-Fi 7 chuẩn Enterprise chịu tải 300+ user",
-          "IP tĩnh miễn phí trọn đời",
-          "Cam kết băng thông quốc tế tối thiểu 25 Mbps",
-          "Đội ngũ kỹ thuật hỗ trợ chuyên biệt 24/7",
-        ],
-      },
-    ],
+    packages: wifi7Plans,
     specifications: [
-      { label: "Băng tần hoạt động", value: "2.4 GHz, 5 GHz và 6 GHz (Tri-Band)" },
-      { label: "Độ rộng kênh tối đa", value: "320 MHz" },
-      { label: "Công nghệ điều chế", value: "4096-QAM (4K-QAM)" },
-      { label: "Tính năng đột phá", value: "Multi-Link Operation (MLO), Multi-RU" },
-      { label: "Bảo mật", value: "WPA3 Enterprise thế hệ mới nhất" },
+      { label: "Chuẩn Wi-Fi", value: "Wi-Fi 7 (IEEE 802.11be)" },
+      { label: "Kênh Wi-Fi tối đa", value: "320 MHz, tùy thiết bị và điều kiện phổ tần" },
+      { label: "Điều chế", value: "4096-QAM" },
+      { label: "Công nghệ", value: "Multi-Link Operation (MLO), 16×16 MIMO" },
+      { label: "Hạ tầng", value: "XGS-PON; tốc độ gói 1 Gbps hoặc 2 Gbps" },
     ],
     faq: [
       {
         question: "Thiết bị cũ (điện thoại, laptop Wi-Fi 5/6) có dùng được Wi-Fi 7 không?",
-        answer: "Hoàn toàn tương thích! Chuẩn Wi-Fi 7 có tính tương thích ngược, các thiết bị cũ vẫn kết nối bình thường và đạt tốc độ tối đa của thiết bị đó.",
+        answer: "Thiết bị Wi-Fi thế hệ trước vẫn có thể kết nối. Trải nghiệm thực tế và tính năng khai thác được phụ thuộc chuẩn Wi-Fi mà thiết bị đầu cuối hỗ trợ.",
       },
       {
         question: "Quy trình đăng ký và lắp đặt gói Wi-Fi 7 như thế nào?",
-        answer: "Quý khách chỉ cần điền form đăng ký trực tuyến hoặc gọi hotline 1800 8168. Kỹ thuật viên Viettel sẽ khảo sát và mang modem Wi-Fi 7 đến lắp đặt trong vòng 24 giờ.",
+        answer: "Viettel cần kiểm tra hạ tầng XGS-PON tại địa chỉ. Có thể để lại thông tin tư vấn trên trang hoặc gọi tổng đài 1800 8168 để được xác nhận giá, phí ban đầu và thiết bị.",
       },
     ],
   },
 
-  "viettel-ngoai-hang-anh": {
-    slug: "viettel-ngoai-hang-anh",
-    title: "Xem Ngoại Hạng Anh Bản Quyền Trên TV360 Viettel",
-    headline: "TRỌN VẸN NGOẠI HẠNG ANH TRÊN TV360 VIETTEL",
-    tagline: "Bản quyền phát sóng trọn vẹn 380 trận đấu mỗi mùa, chất lượng 4K siêu sắc nét, âm thanh Dolby Audio.",
-    badge: "ĐỘC QUYỀN NGOẠI HẠNG ANH",
+  "viettel-champions-league": {
+    slug: "viettel-champions-league",
+    title: "Xem UEFA Champions League trên TV360 Viettel",
+    headline: "UEFA CHAMPIONS LEAGUE TRÊN TV360",
+    tagline: "Theo dõi Champions League cùng các giải thể thao hàng đầu trên TV360. Chọn gói phù hợp thiết bị và nhu cầu xem.",
+    badge: "BÓNG ĐÁ CHÂU ÂU · TV360",
     heroBgGradient: "from-[#38003c] via-[#5b0060] to-[#EE0033]",
     heroBackgroundImage: "/assets/hero-tv360-hcm.jpg",
-    assetImage: "/assets/premier-league.svg",
-    assetAlt: "Ngoại Hạng Anh Bản Quyền TV360 Viettel",
+    galleryImages: [
+      { src: "/assets/hero-tv360-hcm.jpg", alt: "TV360 phát sóng thể thao châu Âu", title: "Bóng đá trên TV360", caption: "Theo dõi lịch thi đấu và quyền xem theo gói đang áp dụng." },
+      { src: "/assets/tv360-box.svg", alt: "Thiết bị TV360 Box Viettel", title: "TV360 trên màn hình lớn", caption: "Chọn thiết bị tương thích theo quyền lợi từng gói." },
+      { src: "/assets/hero-internet-hcm.png", alt: "Gia đình sử dụng dịch vụ Internet và truyền hình", title: "Giải trí tại nhà", caption: "Kết hợp Internet cáp quang và truyền hình theo nhu cầu." },
+    ],
+    assetImage: "/assets/tv360-box.svg",
+    assetAlt: "TV360 Viettel trên thiết bị truyền hình",
     introText:
-      "Thưởng thức trọn vẹn giải bóng đá hấp dẫn nhất hành tinh English Premier League cùng ứng dụng TV360 của Viettel. Trải nghiệm công nghệ truyền hình độ trễ thấp (Ultra Low Latency), bình luận tiếng Việt chuyên sâu và tính năng xem lại 72 giờ không bỏ lỡ bàn thắng nào.",
+      "TV360 của Viettel có các nội dung thể thao gồm UEFA Champions League, Europa League và Bundesliga. Gói cước, danh sách trận, thiết bị hỗ trợ và quyền xem có thể thay đổi theo chính sách tại thời điểm đăng ký; hãy kiểm tra trực tiếp trên TV360 trước khi mua.",
     highlights: [
-      "Bản quyền 380 trận đấu Premier League mỗi mùa",
-      "Độ phân giải 4K Ultra HD mượt mà 60fps",
-      "Xem đồng thời trên SmartTV, Smartphone, Tablet và Box",
-      "Tính năng xem lại highlights, thống kê trận đấu trực tiếp",
+      "Theo dõi UEFA Champions League trên nền tảng TV360",
+      "Gói thể thao có lựa chọn dành cho điện thoại; gói khác hỗ trợ thêm thiết bị tùy quyền lợi",
+      "Một số gói TV360 có miễn phí data 4G/5G Viettel khi xem trên di động",
+      "Kiểm tra lịch thi đấu, danh sách trận và thiết bị được hỗ trợ trong ứng dụng TV360",
     ],
     packages: [
       {
-        name: "TV360 NGOẠI HẠNG VIP",
-        speed: "Truyền hình đa nền tảng",
-        price: 99000,
-        description: "Dành cho khách hàng đã có mạng Internet, chỉ đăng ký gói tài khoản TV360.",
+        name: "TV360 VSPORT",
+        speed: "Gói thể thao · 30 ngày",
+        price: 35000,
+        description: "Mức cước tham khảo theo thông báo Viettel áp dụng từ 15/05/2026. Gói và giá có thể được cập nhật; xem giá đang áp dụng tại TV360 trước khi đăng ký.",
         isHot: true,
         features: [
-          "Trọn vẹn các trận đấu Ngoại Hạng Anh trực tiếp",
-          "Hơn 160 kênh truyền hình trong nước & quốc tế",
-          "Kho phim điện ảnh bom tấn 4K cập nhật hàng tuần",
-          "Đăng nhập cùng lúc trên 5 thiết bị, xem đồng thời 2 màn hình",
-        ],
-      },
-      {
-        name: "COMBO INTERNET 150M + TV360",
-        speed: "150 Mbps + Box 4K",
-        price: 210000,
-        description: "Gói cước tiết kiệm bao gồm cả đường truyền mạng Viettel và truyền hình TV360.",
-        features: [
-          "Đường truyền Internet cáp quang siêu tốc 150 Mbps",
-          "Tặng đầu thu TV360 thông minh điều khiển giọng nói",
-          "Trọn gói bản quyền giải Ngoại Hạng Anh",
-          "Bảo hành thiết bị trọn đời suốt thời gian sử dụng",
-        ],
-      },
-      {
-        name: "COMBO MESH 300M + TV360",
-        speed: "300 Mbps Mesh + TV",
-        price: 275000,
-        description: "Đỉnh cao giải trí cho nhà phố nhiều tầng hoặc chung cư lớn.",
-        features: [
-          "Internet 300 Mbps kèm 1 thiết bị Mesh mở rộng sóng",
-          "Gói truyền hình TV360 Premium không giới hạn",
-          "Xem bóng đá mượt mà không delay ngay cả giờ cao điểm",
-          "Ưu tiên đường truyền băng thông quốc tế",
+          "Nội dung thể thao gồm Champions League, Europa League và Bundesliga theo thông tin gói Viettel",
+          "Thông báo giá Viettel nêu miễn phí data 4G/5G khi xem trên thiết bị di động",
+          "Phạm vi nội dung và thiết bị xem phụ thuộc gói đang đăng ký",
+          "Giá và quyền lợi cuối cùng hiển thị trên trang đăng ký TV360",
         ],
       },
     ],
+    officialSources: [
+      { label: "Viettel Telecom: Thông báo giá và quyền xem gói VSPORT", url: "https://5g.vietteltelecom.vn/vx/tin-tuc/chi-tiet/dieu-chinh-gia-cuoc-dich-vu-truyen-hinh-tv360/14593708" },
+      { label: "Viettel Telecom: Thông tin TV360 và UEFA Champions League", url: "https://www.vietteltelecom.vn/tin-tuc/chi-tiet/xem-world-cup-2026-khong-gioi-han-cung-cac-goi-dich-vu-tv360/15260544" },
+      { label: "TV360: Kiểm tra gói cước hiện hành", url: "https://tv360.vn/packages" },
+    ],
     faq: [
       {
-        question: "Tôi có thể xem Ngoại Hạng Anh TV360 trên tivi thông thường không?",
-        answer: "Được! Viettel sẽ trang bị cho bạn TV360 Box 4K chính hãng, biến tivi thường thành SmartTV có điều khiển tìm kiếm giọng nói bằng tiếng Việt.",
+        question: "Gói VSPORT xem được trên thiết bị nào?",
+        answer: "Thông tin Viettel công bố cho VSPORT áp dụng xem trên điện thoại; một số nội dung/gói có thể hỗ trợ thiết bị khác. Hãy xem mô tả gói trên TV360 để xác nhận trước khi đăng ký.",
+      },
+      {
+        question: "Giá 35.000đ/tháng có phải giá đang áp dụng không?",
+        answer: "Đây là mức Viettel công bố cho VSPORT từ ngày 15/05/2026. TV360 có thể cập nhật tên gói, giá và quyền lợi; giá xác nhận là giá hiển thị tại trang packages hoặc ứng dụng lúc đăng ký.",
       },
     ],
   },
@@ -184,6 +143,11 @@ const baseServices: Record<string, DetailedService> = {
     badge: "BẢNG GIÁ THAM KHẢO THÁNG 11/2026",
     heroBgGradient: "from-[#8B0000] via-[#CC002B] to-[#1E293B]",
     heroBackgroundImage: "/assets/hero-tv360-hcm.jpg",
+    galleryImages: [
+      { src: "/assets/hero-internet-hcm.png", alt: "Gia đình sử dụng Internet Viettel tại nhà", title: "Internet cho cả gia đình", caption: "Kết nối nhiều thiết bị và không gian trong nhà." },
+      { src: "/assets/hero-tv360-hcm.jpg", alt: "Nội dung truyền hình trên TV360", title: "Truyền hình TV360", caption: "Chọn App hoặc Box cùng nội dung gói phù hợp." },
+      { src: "/assets/tv360-box.svg", alt: "TV360 Box Viettel", title: "TV360 Box", caption: "Giải pháp xem trên màn hình TV tương thích." },
+    ],
     assetImage: "/assets/tv360-box.svg",
     assetAlt: "Combo Internet và TV360 Box Viettel",
     introText:
@@ -254,53 +218,97 @@ const baseServices: Record<string, DetailedService> = {
 
   "dich-vu-camera-viettel": {
     slug: "dich-vu-camera-viettel",
-    title: "Camera An Ninh Thông Minh Viettel – AI Cloud Bảo Mật",
-    headline: "CAMERA AN NINH THÔNG MINH VIETTEL AI",
-    tagline: "Hình ảnh Full HD 2K sắc nét, đàm thoại 2 chiều, trí tuệ nhân tạo AI nhận diện người, lưu trữ Cloud an toàn tuyệt đối.",
+    title: "Camera An Ninh Viettel – Camera Cloud",
+    headline: "CAMERA VIETTEL CHO NHÀ VÀ CỬA HÀNG",
+    tagline: "Camera trong nhà và ngoài trời Full HD, đàm thoại hai chiều, phát hiện thông minh và lựa chọn lưu trữ Cloud theo nhu cầu.",
     badge: "BẢO MẬT VIETTEL CLOUD",
     heroBgGradient: "from-[#0F172A] via-[#1E293B] to-[#EE0033]",
     heroBackgroundImage: "/assets/hero-camera-hcm.png",
+    galleryImages: [
+      { src: "/assets/hero-camera-hcm.png", alt: "Các mẫu camera Viettel trong nhà và ngoài trời", title: "Camera Viettel", caption: "Lựa chọn thiết bị trong nhà hoặc ngoài trời." },
+      { src: "/assets/hero-camera-hcm.jpg", alt: "Camera Viettel ngoài trời", title: "Camera ngoài trời", caption: "Chuẩn IP67 theo thông tin sản phẩm Viettel HCM." },
+      { src: "/assets/camera-indoor.svg", alt: "Camera Viettel trong nhà", title: "Camera trong nhà", caption: "Theo dõi và đàm thoại qua ứng dụng hỗ trợ." },
+    ],
+    deviceProducts: [
+      {
+        name: "Camera trong nhà HC26",
+        image: "/assets/camera-indoor.svg",
+        alt: "Camera trong nhà Viettel HC26",
+        summary: "Camera 3 MP xoay trong nhà, kèm Cloud 12 tháng theo lựa chọn lưu trữ.",
+        specs: ["3 MP (2304 × 1296)", "Xoay ngang 355° · dọc 180°", "Hồng ngoại 10 m", "Đàm thoại hai chiều"],
+        tiers: [
+          { retention: "Cloud 1 ngày · 12 tháng", price: 670000, packageName: "Camera trong nhà HC26 + Cloud 1 ngày (12 tháng)" },
+          { retention: "Cloud 3 ngày · 12 tháng", price: 700000, packageName: "Camera trong nhà HC26 + Cloud 3 ngày (12 tháng)" },
+          { retention: "Cloud 7 ngày · 12 tháng", price: 820000, packageName: "Camera trong nhà HC26 + Cloud 7 ngày (12 tháng)" },
+          { retention: "Cloud 15 ngày · 12 tháng", price: 1060000, packageName: "Camera trong nhà HC26 + Cloud 15 ngày (12 tháng)" },
+          { retention: "Cloud 30 ngày · 12 tháng", price: 1420000, packageName: "Camera trong nhà HC26 + Cloud 30 ngày (12 tháng)" },
+        ],
+      },
+      {
+        name: "Camera ngoài trời HC34",
+        image: "/assets/hero-camera-hcm.jpg",
+        alt: "Camera Viettel ngoài trời",
+        summary: "Camera ngoài trời, kèm Cloud 12 tháng theo lựa chọn lưu trữ.",
+        specs: ["Thiết kế lắp đặt ngoài trời", "Chọn Cloud 1, 3 hoặc 7 ngày", "Bảo hành chính hãng 12 tháng", "Giá bán đã gồm VAT"],
+        tiers: [
+          { retention: "Cloud 1 ngày · 12 tháng", price: 870000, packageName: "Camera ngoài trời HC34 + Cloud 1 ngày (12 tháng)" },
+          { retention: "Cloud 3 ngày · 12 tháng", price: 900000, packageName: "Camera ngoài trời HC34 + Cloud 3 ngày (12 tháng)" },
+          { retention: "Cloud 7 ngày · 12 tháng", price: 1020000, packageName: "Camera ngoài trời HC34 + Cloud 7 ngày (12 tháng)" },
+        ],
+      },
+    ],
     assetImage: "/assets/camera-indoor.svg",
     assetAlt: "Camera Viettel AI Cloud 360°",
     introText:
-      "Viettel Camera sử dụng công nghệ điện toán đám mây Cloud tiêu chuẩn quân đội, bảo mật tuyệt đối dữ liệu riêng tư ngay tại Việt Nam. Tính năng AI nhận diện khuôn mặt và cảnh báo đột nhập tức thì về điện thoại qua ứng dụng My Viettel.",
+      "Chọn thiết bị camera trong nhà hoặc ngoài trời và gói lưu trữ Cloud theo số ngày cần xem lại. Mức cước bên dưới là giá tham khảo Viettel HCM, đã gồm VAT; phí triển khai và ưu đãi cần xác nhận theo địa chỉ.",
     highlights: [
-      "Độ phân giải 2K 3MP siêu nét, quan sát ban đêm hồng ngoại 15m",
-      "Trí tuệ nhân tạo AI cảnh báo chuyển động chính xác, giảm báo động giả",
-      "Lưu trữ đám mây Cloud Viettel an toàn, không sợ bị trộm hoặc hỏng thẻ nhớ",
-      "Bảo hành chính hãng 24 tháng, hỗ trợ kỹ thuật tận nhà",
+      "Camera trong nhà HC26: 3 MP, xoay ngang 355° và xoay dọc 180°",
+      "Có lựa chọn camera ngoài trời HC34 và gói Cloud theo thời gian lưu trữ",
+      "Chọn lưu trữ Cloud từ 1 đến 30 ngày theo từng gói",
+      "Mua thiết bị kèm Cloud 12 tháng: trong nhà HC26 từ 670.000đ, ngoài trời HC34 từ 870.000đ",
     ],
     packages: [
       {
-        name: "CAMERA TRONG NHÀ (INDOOR 360°)",
-        speed: "Xoay 360° bao quát",
-        price: 690000,
-        description: "Phù hợp phòng khách, phòng ngủ, theo dõi trẻ nhỏ và người cao tuổi.",
+        name: "CLOUD1",
+        speed: "Lưu trữ 1 ngày · mỗi camera",
+        price: 20000,
+        description: "Gói lưu trữ Cloud Viettel HCM tham khảo, giá đã gồm VAT.",
         isHot: true,
-        features: [
-          "Góc xoay ngang 360°, dọc 100° không góc chết",
-          "Đàm thoại 2 chiều âm thanh trung thực",
-          "Phát hiện tiếng khóc trẻ em, chuyển động bất thường",
-          "Gói lưu trữ Cloud chỉ từ 22.000đ/tháng",
-        ],
+        features: ["Cước 20.000đ/camera/tháng", "Thiết bị trong nhà miễn phí theo bảng giá", "Thiết bị ngoài trời 200.000đ", "Phí lắp đặt xác nhận theo phương án triển khai"],
       },
       {
-        name: "CAMERA NGOÀI TRỜI (OUTDOOR KHÁNG NƯỚC)",
-        speed: "Chuẩn chống nước IP66",
-        price: 990000,
-        description: "Lắp đặt sân vườn, cổng ngõ, ban công, bãi xe chịu mưa nắng bền bỉ.",
-        features: [
-          "Vỏ kim loại chống chịu thời tiết khắc nghiệt",
-          "Đèn LED chiếu sáng ban đêm có màu sắc nét",
-          "Còi hú báo động kết hợp đèn chớp răn đe kẻ gian",
-          "Miễn phí công lắp đặt khi dùng kèm mạng Viettel",
-        ],
+        name: "CLOUD3",
+        speed: "Lưu trữ 3 ngày · mỗi camera",
+        price: 30000,
+        description: "Chọn thời gian lưu trữ dài hơn để xem lại sự kiện gần đây.",
+        features: ["Cước 30.000đ/camera/tháng", "Thiết bị trong nhà miễn phí theo bảng giá", "Thiết bị ngoài trời 200.000đ", "Giá đã gồm VAT"],
       },
+      { name: "CLOUD7", speed: "Lưu trữ 7 ngày · mỗi camera", price: 40000, description: "Gói lưu trữ Cloud Viettel HCM tham khảo.", features: ["Cước 40.000đ/camera/tháng", "Thiết bị trong nhà miễn phí theo bảng giá", "Thiết bị ngoài trời 200.000đ", "Giá đã gồm VAT"] },
+      { name: "CLOUD15", speed: "Lưu trữ 15 ngày · mỗi camera", price: 60000, description: "Gói lưu trữ Cloud Viettel HCM tham khảo.", features: ["Cước 60.000đ/camera/tháng", "Thiết bị trong nhà miễn phí theo bảng giá", "Thiết bị ngoài trời 200.000đ", "Giá đã gồm VAT"] },
+      { name: "CLOUD30", speed: "Lưu trữ 30 ngày · mỗi camera", price: 90000, description: "Gói lưu trữ Cloud Viettel HCM tham khảo.", features: ["Cước 90.000đ/camera/tháng", "Thiết bị trong nhà miễn phí theo bảng giá", "Thiết bị ngoài trời 200.000đ", "Giá đã gồm VAT"] },
+    ],
+    priceTable: {
+      title: "Cước Cloud và mức trang bị khi dùng Internet Viettel",
+      columns: ["Gói Cloud", "Lưu trữ", "Cước / camera / tháng", "Trong nhà (kèm FTTH)", "Ngoài trời (kèm FTTH)"],
+      rows: [
+        { name: "CLOUD1", values: ["1 ngày", "20.000đ", "Miễn phí", "200.000đ"] },
+        { name: "CLOUD3", values: ["3 ngày", "30.000đ", "Miễn phí", "200.000đ"] },
+        { name: "CLOUD7", values: ["7 ngày", "40.000đ", "Miễn phí", "200.000đ"], featured: true },
+        { name: "CLOUD15", values: ["15 ngày", "60.000đ", "Miễn phí", "200.000đ"] },
+        { name: "CLOUD30", values: ["30 ngày", "90.000đ", "Miễn phí", "200.000đ"] },
+      ],
+      note: "Cước Cloud tham khảo đã gồm VAT. Mức trang bị miễn phí trong nhà/200.000đ ngoài trời áp dụng theo chính sách khi đăng ký kèm Internet Viettel; giá mua thiết bị kèm Cloud 12 tháng được hiển thị riêng ở bảng sản phẩm phía trên.",
+    },
+    officialSources: [
+      { label: "Viettel HCM: Bảng giá Home Camera", url: "https://www.viettelhochiminh.vn/home-camera-viettel.html" },
+      { label: "Viettel HCM: Camera ngoài trời", url: "https://www.viettelhochiminh.vn/camera-ngoai-troi.html" },
+      { label: "Viettel Shop: Camera trong nhà HC26 và giá Cloud 12 tháng", url: "https://www.viettel.vn/vx/dien-thoai-thiet-bi/camera-trong-nha-hc26-cloud03" },
+      { label: "Viettel Shop: Thiết bị Camera", url: "https://www.viettel.vn/vx/shop/" },
     ],
     faq: [
       {
-        question: "Dữ liệu camera có bị rò rỉ ra bên ngoài không?",
-        answer: "Tuyệt đối an toàn. Toàn bộ hình ảnh được mã hóa đầu cuối và lưu trên Cloud Data Center tiêu chuẩn quốc tế của Viettel tại Việt Nam, máy chủ không đặt ở nước ngoài.",
+        question: "Cước Cloud tính theo camera hay theo tài khoản?",
+        answer: "Mức cước tham khảo trong bảng được tính cho mỗi camera mỗi tháng. Số lượng camera, thiết bị đi kèm và điều kiện lắp đặt sẽ được xác nhận theo địa chỉ cụ thể.",
       },
     ],
   },
@@ -312,7 +320,12 @@ const baseServices: Record<string, DetailedService> = {
     tagline: "Các gói PRO và MeshPRO với tốc độ đến 1 Gbps, băng thông quốc tế cam kết và lựa chọn mở rộng vùng phủ Wi-Fi.",
     badge: "GIẢI PHÁP KẾT NỐI DOANH NGHIỆP",
     heroBgGradient: "from-[#0c1829] via-[#162a45] to-[#EE0033]",
-    heroBackgroundImage: "/assets/hero-business-hcm.png",
+    heroBackgroundImage: "/assets/hero-internet-hcm.png",
+    galleryImages: [
+      { src: "/assets/enterprise-router.svg", alt: "Thiết bị mạng cho văn phòng doanh nghiệp", title: "Hạ tầng mạng doanh nghiệp", caption: "Chọn gói theo số người dùng và nhu cầu vận hành." },
+      { src: "/assets/hero-internet-hcm.png", alt: "Không gian làm việc sử dụng Internet Viettel", title: "Kết nối văn phòng", caption: "Kết nối ổn định cho làm việc và dịch vụ số." },
+      { src: "/assets/wifi6-modem.svg", alt: "Modem Wi-Fi Viettel", title: "Modem và Mesh Wi-Fi", caption: "Mở rộng vùng phủ tại văn phòng theo gói." },
+    ],
     assetImage: "/assets/enterprise-router.svg",
     assetAlt: "Thiết bị cân bằng tải Doanh nghiệp Viettel",
     introText:
@@ -551,8 +564,9 @@ const baseServices: Record<string, DetailedService> = {
 // Also support legacy fpt slugs mapping to viettel slugs for backward compatibility
 export const servicesData: Record<string, DetailedService> = {
   ...baseServices,
+  "viettel-ngoai-hang-anh": baseServices["viettel-champions-league"],
   "fpt-wifi-7": baseServices["viettel-wifi-7"],
-  "fpt-ngoai-hang-anh": baseServices["viettel-ngoai-hang-anh"],
+  "fpt-ngoai-hang-anh": baseServices["viettel-champions-league"],
   "combo-internet-truyen-hinh-fpt": baseServices["combo-internet-truyen-hinh-viettel"],
   "dich-vu-camera-fpt": baseServices["dich-vu-camera-viettel"],
   "fpt-internet-doanh-nghiep": baseServices["viettel-internet-doanh-nghiep"],

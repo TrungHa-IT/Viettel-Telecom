@@ -23,9 +23,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { customer_name, phone, address, package_name, note } = body;
 
-    if (!customer_name || !phone || !address || !package_name) {
+    if (!phone?.trim() || !package_name?.trim()) {
       return NextResponse.json(
-        { success: false, message: "Vui lòng nhập đầy đủ họ tên, số điện thoại, địa chỉ và gói cước!" },
+        { success: false, message: "Vui lòng nhập số điện thoại và chọn gói cước!" },
         { status: 400 }
       );
     }
@@ -33,7 +33,13 @@ export async function POST(request: Request) {
     const insert = db.prepare(
       "INSERT INTO orders (customer_name, phone, address, package_name, note) VALUES (?, ?, ?, ?, ?)"
     );
-    const result = insert.run(customer_name, phone, address, package_name, note || "");
+    const result = insert.run(
+      customer_name?.trim() || "",
+      phone.trim(),
+      address?.trim() || "",
+      package_name.trim(),
+      note?.trim() || ""
+    );
 
     return NextResponse.json({
       success: true,
